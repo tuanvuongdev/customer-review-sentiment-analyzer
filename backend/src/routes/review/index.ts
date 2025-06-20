@@ -1,7 +1,7 @@
 import express from "express"
 import { asyncHandler } from "../../helpers/asyncHandler";
 import { analyze, getReviews } from "../../controllers/review.controller";
-import AnalyzeRequest from "../../helpers/validations/analyzeRequest";
+import AnalyzeRequest from "../../helpers/validations/analyze.request";
 import { validate } from "../../helpers/validate";
 
 const router = express.Router();

@@ -6,7 +6,6 @@ import { ReasonPhrases } from '../const/reasonPhrases';
 export const validate = (schema: any) => {
     return (req: Request, res: Response, next: NextFunction) => {
         const { error } = schema.validate(req.body);
-        console.log("error:::", error);
         if (error) {
             return next(
                 new BadRequestError(
