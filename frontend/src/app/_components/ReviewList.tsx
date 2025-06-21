@@ -1,18 +1,18 @@
 'use client'
 
+import { ReviewProps } from '@/types/review.type'
+import { IMetadata } from '@/types/common.type'
 import { Calendar, CheckCircle, Circle, MessageCircle, XCircle, User } from 'lucide-react'
 import React from 'react'
-import { ReviewProps } from '../../../types/review.type'
-import { IMetadata } from '../../../types/common.type'
 
 const AnalyzeList = ({ reviews }: { reviews: IMetadata<ReviewProps> }) => {
     const getSentimentIcon = (sentiment: string) => {
         switch (sentiment) {
-            case 'positive':
+            case 'POSITIVE':
                 return <CheckCircle className="w-4 h-4 text-green-500" />
-            case 'negative':
+            case 'NEGATIVE':
                 return <XCircle className="w-4 h-4 text-red-500" />
-            case 'neutral':
+            case 'NEUTRAL':
                 return <Circle className="w-4 h-4 text-gray-500" />
             default:
                 return null
@@ -21,8 +21,14 @@ const AnalyzeList = ({ reviews }: { reviews: IMetadata<ReviewProps> }) => {
 
     const getSentimentColor = (sentiment: string) => {
         switch (sentiment) {
-            case 'positive':
+            case 'POSITIVE':
                 return 'bg-green-100 text-green-800'
+            case 'NEGATIVE':
+                return 'bg-red-100 text-red-800'
+            case 'NEUTRAL':
+                return 'bg-gray-100 text-gray-800'
+            default:
+                return 'bg-gray-100 text-gray-800'
         }
     }
 
@@ -35,7 +41,7 @@ const AnalyzeList = ({ reviews }: { reviews: IMetadata<ReviewProps> }) => {
                         <p>No reviews found</p>
                     </div>
                 ) : (
-                    <div className="space-y-4 max-h-[500px] overflow-y-auto">
+                    <div className="space-y-4 h-[500px] overflow-y-auto">
                         {reviews.data.map((review, index) => (
                             <div key={review.text + "-" + index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
                                 <div className="flex items-start justify-between mb-2">
@@ -56,9 +62,8 @@ const AnalyzeList = ({ reviews }: { reviews: IMetadata<ReviewProps> }) => {
                                 <div className="flex items-center justify-between text-sm text-gray-500">
                                     <div className="flex items-center gap-1">
                                         <Calendar className="w-4 h-4" />
-                                        {/* {new Date(review.createdAt).toLocaleDateString()} */}
                                     </div>
-                                    {/* <span>Confidence: {(review.confidence * 100).toFixed(1)}%</span> */}
+                                    <span>Confidence: {(review.confidence * 100).toFixed(1)}%</span>
                                 </div>
                             </div>
                         ))}

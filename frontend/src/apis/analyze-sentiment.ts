@@ -1,10 +1,10 @@
 import axiosServices from "@/libs/axios";
 import { AxiosResponse } from "axios";
-import { ReviewProps } from "../../types/review.type";
-import { ISearchResponse } from "../../types/common.type";
+import { ReviewProps } from "../types/review.type";
+import { IResponse, ISearchResponse } from "../types/common.type";
 
 export const analyzeReview = async (text: string) => {
-    const response = await axiosServices.post('/api/analyze', { text });
+    const response: AxiosResponse<IResponse<ReviewProps>> = await axiosServices.post('/api/analyze', { text });
     return response.data;
 }
 

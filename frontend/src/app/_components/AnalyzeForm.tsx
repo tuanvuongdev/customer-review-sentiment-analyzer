@@ -1,19 +1,29 @@
 'use client'
 
+import { analyzeReview } from '@/apis/analyze-sentiment';
+import { ReviewProps } from '@/types/review.type';
 import { BarChart3, Send } from 'lucide-react'
 import React, { useState } from 'react'
+import { toast } from 'sonner';
 
 const AnalyzeForm = () => {
     const [reviewText, setReviewText] = useState('');
     const [isAnalyzing, setIsAnalyzing] = useState(false);
-    // const [analysisResult, setAnalysisResult] = useState(null);
+    const [analysisResult, setAnalysisResult] = useState<ReviewProps | null>(null);
 
     const handleAnalyzeReview = async () => {
         setIsAnalyzing(true);
-        // const result = await analyzeSentiment({ text: reviewText });
-        // setAnalysisResult(result);
-        setIsAnalyzing(false);
+        try {
+            const result = await analyzeReview(reviewText);
+            setAnalysisResult(result.metadata);
+        } catch {
+            toast.error('Error analyzing review. Please try again later.');
+        } finally {
+            setIsAnalyzing(false);
+        }
     }
+
+    console.log(analysisResult);
 
     return (
         <div className="bg-white rounded-xl shadow-lg p-6">
@@ -34,7 +44,7 @@ const AnalyzeForm = () => {
                         placeholder="Enter customer review (max 500 characters)..."
                         rows={4}
                         maxLength={500}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                        className="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition duration-200 ease-in-out resize-y min-h-[100px]"
                     />
                     <div className="text-right text-sm text-gray-500 mt-1">
                         {reviewText.length}/500 characters

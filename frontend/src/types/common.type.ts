@@ -1,10 +1,10 @@
-export interface Response<T> {
+export interface IResponse<T> {
     message: string
     status: number
     metadata: T
 }
 
-export interface ISearchResponse<T> extends Response<IMetadata<T>> {
+export interface ISearchResponse<T> extends IResponse<IMetadata<T>> {
     metadata: IMetadata<T>
 }
 
