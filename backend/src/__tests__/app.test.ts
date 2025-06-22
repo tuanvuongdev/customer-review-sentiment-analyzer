@@ -1,6 +1,5 @@
 // backend/src/__tests__/app.test.ts
 import request from 'supertest';
-import { PrismaClient } from '@prisma/client';
 import app from '../app';
 import { analyzeSentiment } from '../services/review.service';
 

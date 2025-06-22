@@ -28,4 +28,4 @@ RUN npm run prisma:generate
 EXPOSE 3056
 
 # Run in development mode
-CMD ["npm", "run", "dev:backend"] 
+CMD ["npm", "run", "dev:backend"]

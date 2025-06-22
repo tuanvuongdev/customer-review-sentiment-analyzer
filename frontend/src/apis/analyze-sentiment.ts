@@ -1,4 +1,4 @@
-import axiosServices from "@/libs/axios";
+import axiosServices from "@/lib/axios";
 import { AxiosResponse } from "axios";
 import { ReviewProps } from "../types/review.type";
 import { IResponse, ISearchResponse } from "../types/common.type";
