@@ -127,22 +127,9 @@ npm run dev:frontend
 - **Backend API**: http://localhost:3056
 - **API Health Check**: http://localhost:3056/health
 
-## 🐳 Docker Deployment
+## 🐳 Docker Deployment - Using Docker Compose (Recommended)
 
-### Using Docker Compose (Recommended)
-
-```bash
-# Build and start containers
-docker-compose up --build
-
-# Run in detached mode
-docker-compose up -d --build
-
-# Stop containers
-docker-compose down
-```
-
-### Manual Docker Setup
+### Automated Docker Setup
 
 ```bash
 # Build and run using the setup script
@@ -151,6 +138,23 @@ chmod +x docker-setup.sh
 
 # Clean up Docker resources
 ./docker-setup.sh --clean
+```
+
+### Manual Docker Setup
+
+```bash
+# Build and start containers manually
+docker-compose up --build -d
+
+# View logs
+docker-compose logs -f
+
+# Stop containers
+docker-compose down
+
+# Complete cleanup (remove containers, images, volumes)
+docker-compose down --rmi all --volumes --remove-orphans
+docker system prune -f
 ```
 
 ## 📚 API Documentation
