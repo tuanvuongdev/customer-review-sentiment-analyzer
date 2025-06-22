@@ -7,7 +7,7 @@ import { History, MessageCircle } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface PageProps {
-  searchParams: Promise<{ page?: string; limit?: string }>;
+  searchParams: Promise<{ page?: string; limit?: string; refresh?: string }>;
 }
 
 export default async function Home({ searchParams }: PageProps) {
@@ -57,8 +57,8 @@ function ReviewsLoadingSkeleton() {
   return (
     <div className="container mx-auto space-y-8">
       <div className="flex flex-col gap-4">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <Skeleton key={i} className="h-[120px] w-full" />
+        {Array.from({ length: 3 }).map((_, i) => (
+          <Skeleton key={i} className="h-[150px] w-full" />
         ))}
       </div>
       <Skeleton className="mx-auto h-8 w-[220px]" />

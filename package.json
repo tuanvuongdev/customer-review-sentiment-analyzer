@@ -1,0 +1,45 @@
+{
+    "name": "sentiment-analyzer",
+    "version": "1.0.0",
+    "description": "A sentiment analyzer application with React frontend and Node.js backend",
+    "private": true,
+    "workspaces": [
+        "backend",
+        "frontend"
+    ],
+    "scripts": {
+        "install:all": "npm install && npm install --workspace=backend && npm install --workspace=frontend",
+        "dev": "concurrently \"npm run dev --workspace=backend\" \"npm run dev --workspace=frontend\"",
+        "dev:backend": "npm run dev --workspace=backend",
+        "dev:frontend": "npm run dev --workspace=frontend",
+        "build": "npm run build --workspace=backend && npm run build --workspace=frontend",
+        "build:backend": "npm run build --workspace=backend",
+        "build:frontend": "npm run build --workspace=frontend",
+        "start": "concurrently \"npm run start --workspace=backend\" \"npm run start --workspace=frontend\"",
+        "start:backend": "npm run start --workspace=backend",
+        "start:frontend": "npm run start --workspace=frontend",
+        "test": "npm run test --workspace=backend",
+        "test:backend": "npm run test --workspace=backend",
+        "prisma:generate": "npm run prisma:generate --workspace=backend",
+        "prisma:migrate": "npm run prisma:migrate --workspace=backend",
+        "setup": "./setup.sh",
+        "docker:build": "./docker-setup.sh",
+        "docker:clean": "./docker-setup.sh --clean"
+    },
+    "devDependencies": {
+        "concurrently": "^9.1.0"
+    },
+    "keywords": [
+        "sentiment-analysis",
+        "react",
+        "nodejs",
+        "express",
+        "nextjs",
+        "prisma"
+    ],
+    "author": "",
+    "license": "ISC",
+    "engines": {
+        "node": ">=18.0.0"
+    }
+}

@@ -107,6 +107,11 @@ out/
 # TypeScript
 *.tsbuildinfo
 
+# TypeScript compiled files (should use ts-node instead)
+backend/src/**/*.js
+backend/server.js
+backend/*.js
+
 # Testing
 coverage/
 .nyc_output/

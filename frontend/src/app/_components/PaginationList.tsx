@@ -26,7 +26,7 @@ const PaginationList = ({ currentPage, totalPages }: { currentPage: string, tota
                         </PaginationLink>
                     </PaginationItem>
                 ))}
-                {totalPages > 3 && currentPageNumber < totalPages - 1 && (
+                {totalPages > 3 && currentPageNumber < totalPages - 3 && (
                     <PaginationItem>
                         <PaginationEllipsis />
                     </PaginationItem>

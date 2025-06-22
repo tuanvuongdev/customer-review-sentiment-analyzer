@@ -2,20 +2,25 @@
 
 import { analyzeReview } from '@/apis/analyze-sentiment';
 import { ReviewProps } from '@/types/review.type';
-import { BarChart3, Send } from 'lucide-react'
-import React, { useState } from 'react'
+import { BarChart3, Send } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { toast } from 'sonner';
 
 const AnalyzeForm = () => {
     const [reviewText, setReviewText] = useState('');
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [analysisResult, setAnalysisResult] = useState<ReviewProps | null>(null);
+    const router = useRouter();
 
     const handleAnalyzeReview = async () => {
         setIsAnalyzing(true);
         try {
             const result = await analyzeReview(reviewText);
             setAnalysisResult(result.metadata);
+            setReviewText('');
+            toast.success('Review analyzed successfully!');
+            router.refresh();
         } catch {
             toast.error('Error analyzing review. Please try again later.');
         } finally {
@@ -23,7 +28,16 @@ const AnalyzeForm = () => {
         }
     }
 
-    console.log(analysisResult);
+    const getSentimentColor = (sentiment: string) => {
+        switch (sentiment) {
+            case 'POSITIVE':
+                return 'bg-green-100 text-green-800 border-green-200';
+            case 'NEGATIVE':
+                return 'bg-red-100 text-red-800 border-red-200';
+            default:
+                return 'bg-gray-100 text-gray-800 border-gray-200';
+        }
+    };
 
     return (
         <div className="bg-white rounded-xl shadow-lg p-6">
@@ -69,6 +83,42 @@ const AnalyzeForm = () => {
                     )}
                 </button>
             </div>
+
+            {analysisResult && (
+                <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Analysis Result</h3>
+
+                    <div className="flex items-center gap-3 mb-4">
+                        <span className={`px-3 py-1 rounded-full text-sm font-medium border ${getSentimentColor(analysisResult.sentiment)}`}>
+                            {analysisResult.sentiment}
+                        </span>
+                        <span className="text-gray-600">
+                            Confidence: {(analysisResult.confidence * 100).toFixed(1)}%
+                        </span>
+                    </div>
+
+                    <div className="space-y-2">
+                        <div className="flex gap-4 items-center">
+                            <span className="text-sm text-gray-600">Positive</span>
+                            <span className="text-sm font-medium text-green-600">
+                                {(analysisResult.scores.positive).toFixed(2)}
+                            </span>
+                        </div>
+                        <div className="flex gap-4 items-center">
+                            <span className="text-sm text-gray-600">Negative</span>
+                            <span className="text-sm font-medium text-red-600">
+                                {(analysisResult.scores.negative).toFixed(2)}
+                            </span>
+                        </div>
+                        <div className="flex gap-4 items-center">
+                            <span className="text-sm text-gray-600">Neutral</span>
+                            <span className="text-sm font-medium text-gray-600">
+                                {(analysisResult.scores.neutral).toFixed(2)}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            )}
 
         </div>
     )

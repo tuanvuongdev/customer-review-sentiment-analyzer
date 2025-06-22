@@ -1,0 +1,40 @@
+services:
+  # Backend Development Service
+  backend:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    container_name: sentiment-analyzer-backend
+    environment:
+      NODE_ENV: development
+      PORT: 3056
+      HOST: 0.0.0.0
+      DATABASE_URL: file:./dev.db
+      CORS_ORIGIN: http://localhost:3000
+    ports:
+      - "3056:3056"
+    volumes:
+      - ./backend:/app/backend
+      - /app/backend/node_modules
+      - backend_data:/app/backend/prisma
+
+  # Frontend Development Service
+  frontend:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    container_name: sentiment-analyzer-frontend
+    environment:
+      NODE_ENV: development
+      API_URL: http://backend:3056/api
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app/frontend
+      - /app/frontend/node_modules
+      - /app/frontend/.next
+    depends_on:
+      - backend
+
+volumes:
+  backend_data:
