@@ -1,10 +1,10 @@
 import { getReviews } from "@/apis/analyze-sentiment";
+import { Skeleton } from "@/components/ui/skeleton";
+import { History, MessageCircle } from "lucide-react";
+import { Suspense } from "react";
 import AnalyzeForm from "./_components/AnalyzeForm";
 import ReviewList from "./_components/ReviewList";
-import { Suspense } from "react";
-import PaginationList from "./_components/PaginationList";
-import { History, MessageCircle } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
+import { redirect } from "next/navigation";
 
 interface PageProps {
   searchParams: Promise<{ page?: string; limit?: string; refresh?: string }>;
@@ -45,11 +45,12 @@ export default async function Home({ searchParams }: PageProps) {
 async function RecentReviews({ page, limit }: { page: string, limit: string }) {
   const reviews = await getReviews(page, limit);
 
+  if (!Number.isInteger(Number(page)) || (reviews.pagination.totalPages && Number(page) > reviews.pagination.totalPages)) {
+    redirect(`/?page=1&limit=${limit}`)
+  }
+
   return (
-    <div className="flex flex-col gap-8">
-      <ReviewList reviews={reviews} />
-      <PaginationList currentPage={page} totalPages={reviews.pagination.totalPages} />
-    </div>
+    <ReviewList reviews={reviews} />
   )
 }
 

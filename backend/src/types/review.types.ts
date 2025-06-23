@@ -32,3 +32,12 @@ export interface GetReviewsRequest {
     page: number;
     limit: number;
 }
+
+export interface ReviewsPrisma {
+    text: string;
+    sentiment: ISentiment;
+    confidence: number;
+    positiveScore: number;
+    negativeScore: number;
+    neutralScore: number;
+}

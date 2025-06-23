@@ -4,7 +4,8 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   output: 'standalone',
   env: {
-    API_URL: process.env.API_URL,
+    API_ENDPOINT_SERVER: process.env.API_ENDPOINT_SERVER,
+    API_ENDPOINT_CLIENT: process.env.API_ENDPOINT_CLIENT,
   },
 };
 

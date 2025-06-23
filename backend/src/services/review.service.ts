@@ -1,5 +1,5 @@
 import { prisma } from "../dbs/init.prisma";
-import { ISentiment, Pagination, SentimentResponse } from "../types/review.types";
+import { ISentiment, Pagination, ReviewsPrisma, SentimentResponse } from "../types/review.types";
 import natural from "natural"
 
 export const analyzeSentiment = async ({ text }: { text: string }): Promise<SentimentResponse> => {
@@ -28,25 +28,23 @@ export const analyzeSentiment = async ({ text }: { text: string }): Promise<Sent
     if (normalizedScore > 0.1) sentiment = 'POSITIVE';
     else if (normalizedScore < -0.1) sentiment = 'NEGATIVE';
 
-    const scores = {
-        positive: Math.max(0, normalizedScore),
-        negative: Math.max(0, -normalizedScore),
-        neutral: Math.max(0.1, 1 - Math.abs(normalizedScore)),
-    };
+    let positiveScore = Math.max(0, normalizedScore);
+    let negativeScore = Math.max(0, -normalizedScore);
+    let neutralScore = Math.max(0.1, 1 - Math.abs(normalizedScore));
 
-    const scoreSum = scores.positive + scores.negative + scores.neutral;
-    scores.positive = scores.positive / scoreSum;
-    scores.negative = scores.negative / scoreSum;
-    scores.neutral = scores.neutral / scoreSum;
+    const scoreSum = positiveScore + negativeScore + neutralScore;
+    positiveScore = positiveScore / scoreSum;
+    negativeScore = negativeScore / scoreSum;
+    neutralScore = neutralScore / scoreSum;
 
     const newReview = await prisma.review.create({
         data: {
             text,
             sentiment,
             confidence,
-            negativeScore: scores.negative,
-            positiveScore: scores.positive,
-            neutralScore: scores.neutral
+            positiveScore,
+            negativeScore,
+            neutralScore
         }
     })
 
@@ -55,9 +53,9 @@ export const analyzeSentiment = async ({ text }: { text: string }): Promise<Sent
         sentiment: (newReview?.sentiment as ISentiment),
         confidence: parseFloat(confidence.toFixed(2)),
         scores: {
-            positive: parseFloat(scores.positive.toFixed(3)),
-            negative: parseFloat(scores.negative.toFixed(3)),
-            neutral: parseFloat(scores.neutral.toFixed(3))
+            positive: parseFloat(positiveScore.toFixed(2)),
+            negative: parseFloat(negativeScore.toFixed(2)),
+            neutral: parseFloat(neutralScore.toFixed(2))
         },
     };
 }
@@ -84,7 +82,7 @@ export const findAllReviews = async ({ page, limit }: { page: number, limit: num
         prisma.review.count()
     ])
     return {
-        data: reviews.map((review) => ({
+        data: reviews.map((review: ReviewsPrisma) => ({
             text: review.text,
             sentiment: review.sentiment as ISentiment,
             confidence: review.confidence,
