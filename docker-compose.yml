@@ -13,9 +13,9 @@ services:
     ports:
       - "3056:3056"
     volumes:
-      - ./backend:/app/backend
-      - /app/backend/node_modules
-      - backend_data:/app/backend/prisma
+      - ./backend:/app
+      - /app/node_modules
+      - backend_data:/app/prisma
 
   # Frontend Development Service
   frontend:
@@ -30,9 +30,9 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/app/frontend
-      - /app/frontend/node_modules
-      - /app/frontend/.next
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
     depends_on:
       - backend
 

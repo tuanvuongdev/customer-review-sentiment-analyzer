@@ -8,23 +8,20 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Copy root package files (for workspaces)
-COPY package*.json ./
-# Copy workspace package files
-COPY backend/package*.json ./backend/
-COPY frontend/package*.json ./frontend/
-COPY backend/prisma ./backend/prisma/
+# Copy backend package files only
+COPY backend/package*.json ./
+COPY backend/prisma ./prisma/
 
-# Install all dependencies using workspaces
-RUN npm ci
+# Install backend dependencies directly
+RUN npm install
 
 # Copy backend source code
-COPY backend/ ./backend/
+COPY backend/ ./
 
-# Generate Prisma client using workspace command
-RUN npm run prisma:generate
+# Generate Prisma client
+RUN npx prisma generate
 
 EXPOSE 3056
 
 # Run migrations and start development server
-CMD ["sh", "-c", "npm run prisma:migrate && npm run dev:backend"]
+CMD ["sh", "-c", "npx prisma migrate dev --name init && npm run dev"]

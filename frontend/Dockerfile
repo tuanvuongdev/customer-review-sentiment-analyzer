@@ -6,20 +6,17 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Copy root package files (for workspaces)
-COPY package*.json ./
-# Copy workspace package files
-COPY backend/package*.json ./backend/
-COPY frontend/package*.json ./frontend/
+# Copy frontend package files only
+COPY frontend/package*.json ./
 
-# Install all dependencies using workspaces
-RUN npm ci
+# Install frontend dependencies directly
+RUN npm install
 
 # Copy frontend source code
-COPY frontend/ ./frontend/
+COPY frontend/ ./
 
 EXPOSE 3000
 
 # Run in development mode
 ENV NEXT_TELEMETRY_DISABLED=1
-CMD ["npm", "run", "dev:frontend"]
+CMD ["npm", "run", "dev"]
