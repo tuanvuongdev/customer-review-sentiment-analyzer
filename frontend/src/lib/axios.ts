@@ -1,11 +1,20 @@
 import axios from 'axios'
 
-export const BASE_URL = typeof window !== 'undefined' ?
-    process.env.API_ENDPOINT_CLIENT :
-    process.env.API_ENDPOINT_SERVER
+const objectEndpoint = {
+    client: process.env.API_ENDPOINT_CLIENT,
+    server: process.env.API_ENDPOINT_SERVER
+}
 
-const axiosServices = axios.create({
-    baseURL: BASE_URL
+function getBaseURL(type: keyof typeof objectEndpoint) {
+    return objectEndpoint[type]
+}
+
+export const axiosClient = axios.create({
+    baseURL: getBaseURL('client')
 })
 
-export default axiosServices
+export const axiosServer = axios.create({
+    baseURL: getBaseURL('server')
+})
+
+

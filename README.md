@@ -90,10 +90,30 @@ sentiment-analyzer/
    cd sentiment-analyzer
    ```
 
-2. **Run the setup script**
+2. **Set up environment variables**
+
+   **⚠️ IMPORTANT: You must create environment files before running the application.**
+
+   **Frontend Environment Setup:**
 
    ```bash
-   chmod +x setup.sh
+   # Create .env file in the frontend directory
+   API_ENDPOINT_SERVER=http://localhost:3056/api
+   API_ENDPOINT_CLIENT=http://localhost:3056/api
+   ```
+
+   **Backend Environment Setup:**
+
+   ```bash
+   NODE_ENV=development
+   PORT=3056
+   HOST=localhost
+   DATABASE_URL=file:./dev.db
+   ```
+
+3. **Run the setup script**
+
+   ```bash
    ./setup.sh
    ```
 
@@ -104,6 +124,8 @@ sentiment-analyzer/
    - Run database migrations
 
 ### Development
+
+**⚠️ Note: Make sure you have created the required .env files before starting development (see step 2 in Installation above).**
 
 **Start both frontend and backend:**
 
@@ -133,7 +155,6 @@ npm run dev:frontend
 
 ```bash
 # Build and run using the setup script
-chmod +x docker-setup.sh
 ./docker-setup.sh
 
 # Clean up Docker resources
