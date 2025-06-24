@@ -86,7 +86,7 @@ sentiment-analyzer/
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/tuanvuongdev/customer-review-sentiment-analyzer.git
+   https://github.com/tuanvuongdev/sentiment-analyzer.git
    cd sentiment-analyzer
    ```
 
