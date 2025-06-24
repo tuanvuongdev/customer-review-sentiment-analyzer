@@ -1,5 +1,5 @@
 import { prisma } from "../dbs/init.prisma";
-import { ISentiment, Pagination, ReviewsPrisma, SentimentResponse } from "../types/review.types";
+import { ISentiment, Pagination, SentimentResponse } from "../types/review.types";
 import natural from "natural"
 
 export const analyzeSentiment = async ({ text }: { text: string }): Promise<SentimentResponse> => {
@@ -82,7 +82,7 @@ export const findAllReviews = async ({ page, limit }: { page: number, limit: num
         prisma.review.count()
     ])
     return {
-        data: reviews.map((review: ReviewsPrisma) => ({
+        data: reviews.map((review) => ({
             text: review.text,
             sentiment: review.sentiment as ISentiment,
             confidence: review.confidence,
