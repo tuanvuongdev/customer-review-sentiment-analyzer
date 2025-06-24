@@ -131,7 +131,7 @@ describe('Sentiment Analysis API', () => {
                 .send({ text: '' })
                 .expect(400);
 
-            expect(response.body).toHaveProperty('status', 'error');
+            expect(response.body).toHaveProperty('status', 400);
             expect(response.body).toHaveProperty('message');
             expect(prisma.review.create).not.toHaveBeenCalled();
         });
@@ -144,7 +144,7 @@ describe('Sentiment Analysis API', () => {
                 .send({ text: longText })
                 .expect(400);
 
-            expect(response.body).toHaveProperty('status', 'error');
+            expect(response.body).toHaveProperty('status', 400);
             expect(response.body).toHaveProperty('message');
             expect(prisma.review.create).not.toHaveBeenCalled();
         });
@@ -155,7 +155,7 @@ describe('Sentiment Analysis API', () => {
                 .send({})
                 .expect(400);
 
-            expect(response.body).toHaveProperty('status', 'error');
+            expect(response.body).toHaveProperty('status', 400);
             expect(response.body).toHaveProperty('message');
             expect(prisma.review.create).not.toHaveBeenCalled();
         });
@@ -166,7 +166,7 @@ describe('Sentiment Analysis API', () => {
                 .send({ text: 123 })
                 .expect(400);
 
-            expect(response.body).toHaveProperty('status', 'error');
+            expect(response.body).toHaveProperty('status', 400);
             expect(response.body).toHaveProperty('message');
             expect(prisma.review.create).not.toHaveBeenCalled();
         });
@@ -179,7 +179,7 @@ describe('Sentiment Analysis API', () => {
                 .send({ text: 'Test review' })
                 .expect(500);
 
-            expect(response.body).toHaveProperty('status', 'error');
+            expect(response.body).toHaveProperty('status', 500);
             expect(response.body).toHaveProperty('message');
         });
 
@@ -190,7 +190,7 @@ describe('Sentiment Analysis API', () => {
                 .send('invalid json')
                 .expect(400);
 
-            expect(response.body).toHaveProperty('status', 'error');
+            expect(response.body).toHaveProperty('status', 400);
         });
     });
 
@@ -314,7 +314,7 @@ describe('Sentiment Analysis API', () => {
                 .get('/api/reviews')
                 .expect(500);
 
-            expect(response.body).toHaveProperty('status', 'error');
+            expect(response.body).toHaveProperty('status', 500);
             expect(response.body).toHaveProperty('message');
         });
 
@@ -326,7 +326,7 @@ describe('Sentiment Analysis API', () => {
                 .get('/api/reviews')
                 .expect(500);
 
-            expect(response.body).toHaveProperty('status', 'error');
+            expect(response.body).toHaveProperty('status', 500);
             expect(response.body).toHaveProperty('message');
         });
     });
@@ -337,7 +337,7 @@ describe('Sentiment Analysis API', () => {
                 .get('/api/nonexistent')
                 .expect(404);
 
-            expect(response.body).toHaveProperty('status', 'error');
+            expect(response.body).toHaveProperty('status', 404);
             expect(response.body).toHaveProperty('message', 'Not Found');
         });
 
@@ -346,7 +346,7 @@ describe('Sentiment Analysis API', () => {
                 .get('/')
                 .expect(404);
 
-            expect(response.body).toHaveProperty('status', 'error');
+            expect(response.body).toHaveProperty('status', 404);
             expect(response.body).toHaveProperty('message', 'Not Found');
         });
 
@@ -356,7 +356,7 @@ describe('Sentiment Analysis API', () => {
                 .send({ text: 'test' })
                 .expect(404);
 
-            expect(response.body).toHaveProperty('status', 'error');
+            expect(response.body).toHaveProperty('status', 404);
             expect(response.body).toHaveProperty('message', 'Not Found');
         });
     });
