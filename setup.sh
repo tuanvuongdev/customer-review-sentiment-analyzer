@@ -4,6 +4,22 @@ echo "🚀 Setting up Sentiment Analyzer project..."
 echo "📦 Installing root, backend & frontend dependencies..."
 npm run install:all
 
+# Copy environment files
+echo "🔧 Setting up environment files..."
+if [ -f "backend/.env.example" ]; then
+    cp backend/.env.example backend/.env
+    echo "  ✓ Copied backend/.env.example to backend/.env"
+else
+    echo "  ⚠️  backend/.env.example not found"
+fi
+
+if [ -f "frontend/.env.example" ]; then
+    cp frontend/.env.example frontend/.env
+    echo "  ✓ Copied frontend/.env.example to frontend/.env"
+else
+    echo "  ⚠️  frontend/.env.example not found"
+fi
+
 # Generate Prisma client and run migrations
 echo "🗄️  Setting up database..."
 npm run prisma:generate
