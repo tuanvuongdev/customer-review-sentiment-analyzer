@@ -190,7 +190,7 @@ docker system prune -f
 #### 🔍 Analyze Sentiment
 
 ```http
-POST /api/review/analyze
+POST /api/analyze
 ```
 
 **Request Body:**
@@ -223,7 +223,7 @@ POST /api/review/analyze
 #### 📋 Get Reviews
 
 ```http
-GET /api/review/reviews?page=1&limit=10
+GET /api/reviews?page=1&limit=10
 ```
 
 **Query Parameters:**
